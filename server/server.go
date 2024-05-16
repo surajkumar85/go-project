@@ -20,7 +20,8 @@ func NewAPIServer(addr string) *APIServer {
 func (s *APIServer) Run() error {
 	router := http.NewServeMux()
 
-	userHandler:=user.NewUserHandler()
+	userService := user.NewService()
+	userHandler:=user.NewUserHandler(userService)
 	userHandler.RegisteredRoutes(router)
 	v1 := http.NewServeMux()
 	v1.Handle("/api/v1/" ,http.StripPrefix("/api/v1",router))
